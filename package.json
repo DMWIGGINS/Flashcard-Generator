@@ -1,0 +1,27 @@
+{
+  "name": "flashcard-generator",
+  "version": "1.0.0",
+  "description": "create your own basic and cloze flashcards",
+  "main": "flashcard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DMWIGGINS/Flashcard-Generator.git"
+  },
+  "keywords": [
+    "flashcard",
+    "basic",
+    "cloze"
+  ],
+  "author": "Doreen M Wiggins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DMWIGGINS/Flashcard-Generator/issues"
+  },
+  "homepage": "https://github.com/DMWIGGINS/Flashcard-Generator#readme",
+  "dependencies": {
+    "inquirer": "^4.0.1"
+  }
+}
