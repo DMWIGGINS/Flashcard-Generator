@@ -1,0 +1,1 @@
+{"cloze":"blue","fulltext":"Why is the sky blue?","partial":"Why is the sky ...?"}{"cloze":"I","fulltext":"I don't know","partial":"... don't know"}
