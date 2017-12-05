@@ -22,14 +22,14 @@
  };
 
  BasicCard.prototype.printInfoBasic = function () {
-     console.log(this.front);
-     console.log(this.back);
+     console.log("Front: " + this.front);
+     console.log("Back: " + this.back);
  };
 
  ClozeCard.prototype.printInfoCloze = function () {
-     console.log(this.fulltext);
-     console.log(this.cloze);
-     console.log(this.partial);
+     console.log("Fulltext: " + this.fulltext);
+     console.log("Cloze: " + this.cloze);
+     console.log("Partial: " + this.partial);
  };
  var firstPresident = new BasicCard("Who was the first US President?", "George Washington");
 
@@ -59,40 +59,77 @@
          var basicCard = new BasicCard(answers.front, answers.back);
          myBasicCards.push(basicCard);
          fs.appendFile("basiclog.txt", JSON.stringify(basicCard));
-         console.log(myBasicCards);
-         fs.readFile("basiclog.txt");
+         //  fs.appendFile("basiclog.txt", JSON.stringify(myBasicCards)); 
+
+         basicCard.printInfoBasic();
+         //  console.log(myBasicCards);
+
      });
+
  };
 
  function createClozeCard() {
      inquirer.prompt([{
-         name: "text",
-         message: "Please type the full text you would like on the cloze card."
-     }, {
-         name: "cloze",
-         message: "Please type just the cloze part of the text."
-     }]).then(function (answers) {
+             name: "text",
+             message: "Please type the full text you would like on the cloze card."
+         },
+         {
+             name: "cloze",
+             message: "Please type just the cloze part of the text."
+         }
+     ]).then(function (answers) {
          var clozeCard = new ClozeCard(answers.text, answers.cloze);
          myClozeCards.push(clozeCard);
          fs.appendFile("clozelog.txt", JSON.stringify(clozeCard));
-         console.log(myClozeCards);
+         clozeCard.printInfoCloze();
+         clozeCard.correctFormat();
+         //  console.log(myClozeCards);
+
      });
  };
+
 
  function inputFlashCard() {
      inquirer.prompt([{
          type: "list",
          name: "flashcard",
          message: "What type of flashcard would you like to create?",
-         choices: ["Basic", "Cloze"]
+         choices: ["Basic", "Cloze", "I'm all done for now"]
 
      }]).then(function (answers) {
          if (answers.flashcard === "Basic") {
              createBasicCard();
+
+
          } else if (answers.flashcard === "Cloze") {
              createClozeCard();
+
+
+         } else if (answers.flashcard === "I'm all done for now") {
+             console.log("See you next time!");
+
+
          }
-     })
- }
+
+     });
+ };
+
 
  inputFlashCard();
+
+ function showBasicCard() {
+     fs.readFile("basiclog.txt", "utf8", function (error, data) {
+         if (error) {
+             console.log(error);
+         } else {
+             console.log(JSON.parse(data));
+         }
+
+
+
+
+     });
+
+ };
+
+//  showBasicCard();
