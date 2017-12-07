@@ -7,17 +7,17 @@
  var myBasicCards = [];
  var myClozeCards = [];
 
- //  ClozeCard.prototype.partial = function () {
-
- //      this.partial = this.fulltext.replace(this.cloze, "...");
- //  };
 
  ClozeCard.prototype.correctFormat = function () {
      if (this.fulltext.search(this.cloze) != -1) {
-         console.log("Entered correctly")
+         console.log("Entered correctly");
+         return true;
+
+
 
      } else {
-         console.log("The text you have entered does not include the cloze and is broken")
+         console.log("The text you have entered does not include the cloze and is broken");
+         return false;
      }
  };
 
@@ -31,63 +31,100 @@
      console.log("Cloze: " + this.cloze);
      console.log("Partial: " + this.partial);
  };
- var firstPresident = new BasicCard("Who was the first US President?", "George Washington");
+ //  var firstPresident = new BasicCard("Who was the first US President?", "George Washington");
 
- firstPresident.printInfoBasic();
+ //  firstPresident.printInfoBasic();
 
- var blackCatCloze = new ClozeCard("Dahlia is a wonderful black kitty!", "Dahlia");
+ //  var blackCatCloze = new ClozeCard("Dahlia is a wonderful black kitty!", "Dahlia");
 
- blackCatCloze.printInfoCloze();
+ //  blackCatCloze.printInfoCloze();
 
 
- var tigerCatCloze = new ClozeCard("Iris is a rumbly girl!", "Iris");
- myClozeCards.push(tigerCatCloze);
- tigerCatCloze.printInfoCloze();
- tigerCatCloze.correctFormat();
- console.log(myClozeCards);
+ //  var tigerCatCloze = new ClozeCard("Iris is a rumbly girl!", "Iris");
+ //  tigerCatCloze.printInfoCloze();
+ //  tigerCatCloze.correctFormat();
+
+
+ var count = 0;
 
  function createBasicCard() {
-     inquirer.prompt([{
-             name: "front",
-             message: "Please type the question you would like on the front of the basic flashcard."
-         },
-         {
-             name: "back",
-             message: "Please type the answer you would like on the back of the basic flashcard."
+     if (count < 2) {
+         inquirer.prompt([{
+                 name: "front",
+                 message: "Please type the question you would like on the front of the basic flashcard."
+             },
+             {
+                 name: "back",
+                 message: "Please type the answer you would like on the back of the basic flashcard."
+             }
+         ]).then(function (answers) {
+             var basicCard = new BasicCard(answers.front, answers.back);
+             myBasicCards.push(basicCard);
+             fs.appendFile("basiclog.txt", JSON.stringify(basicCard));
+             //  fs.appendFile("basiclog.txt", JSON.stringify(myBasicCards)); 
+
+             basicCard.printInfoBasic();
+             //  console.log(myBasicCards);
+             count++;
+             createBasicCard();
+         });
+
+     } else {
+         console.log("Your basic cards have been created!");
+         for (var i = 0; i < myBasicCards.length; i++) {
+             myBasicCards[i].printInfoBasic();
+             //  console.log(myBasicCards[i].front);
+             //  console.log(myBasicCards[i].back);
+             //  $("#question").text(MyBasicCards[1].front);
+             //  $("#answer").text(MyBasicCards[1].back);
+             //  document.getElementById("question").innerHTML = MyBasicCards[1].front;
+             //  document.getElementById("answer").innerHTML = MyBasicCards[1].back;
+
+
+
          }
-     ]).then(function (answers) {
-         var basicCard = new BasicCard(answers.front, answers.back);
-         myBasicCards.push(basicCard);
-         fs.appendFile("basiclog.txt", JSON.stringify(basicCard));
-         //  fs.appendFile("basiclog.txt", JSON.stringify(myBasicCards)); 
-
-         basicCard.printInfoBasic();
-         //  console.log(myBasicCards);
-
-     });
+     }
 
  };
+
+
+
 
  function createClozeCard() {
-     inquirer.prompt([{
-             name: "text",
-             message: "Please type the full text you would like on the cloze card."
-         },
-         {
-             name: "cloze",
-             message: "Please type just the cloze part of the text."
+     if (count < 2) {
+         inquirer.prompt([{
+                 name: "text",
+                 message: "Please type the full text you would like on the cloze card."
+             },
+             {
+                 name: "cloze",
+                 message: "Please type just the cloze part of the text."
+             }
+         ]).then(function (answers) {
+             var clozeCard = new ClozeCard(answers.text, answers.cloze);
+             if (clozeCard.correctFormat() !== true) {
+                 console.log("Please try again");
+                 createClozeCard();
+             } else {
+
+                 myClozeCards.push(clozeCard);
+                 fs.appendFile("clozelog.txt", JSON.stringify(clozeCard));
+                 clozeCard.printInfoCloze();
+
+
+                 //  console.log(myClozeCards);
+                 count++;
+                 createClozeCard();
+             }
+         });
+     } else {
+         console.log("Your cloze cards have been created!");
+         for (var i = 0; i < myClozeCards.length; i++) {
+             myClozeCards[i].printInfoCloze();
+
          }
-     ]).then(function (answers) {
-         var clozeCard = new ClozeCard(answers.text, answers.cloze);
-         myClozeCards.push(clozeCard);
-         fs.appendFile("clozelog.txt", JSON.stringify(clozeCard));
-         clozeCard.printInfoCloze();
-         clozeCard.correctFormat();
-         //  console.log(myClozeCards);
-
-     });
+     };
  };
-
 
  function inputFlashCard() {
      inquirer.prompt([{
@@ -114,22 +151,4 @@
      });
  };
 
-
  inputFlashCard();
-
- function showBasicCard() {
-     fs.readFile("basiclog.txt", "utf8", function (error, data) {
-         if (error) {
-             console.log(error);
-         } else {
-             console.log(JSON.parse(data));
-         }
-
-
-
-
-     });
-
- };
-
-//  showBasicCard();

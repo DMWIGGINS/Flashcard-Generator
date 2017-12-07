@@ -1,1 +1,1 @@
-{"front":"Who won the game today?","back":"The Patriots"}[object Object][object Object]{"front":"Who is the BEST!","back":"ME"}[{"front":"Who is the BEST!","back":"ME"}]{"front":"what","back":"IS"}
+{"front":"Who is George?","back":"He's the PRES!"}{"front":"Who is my favorite pres?","back":"Obama"}{"front":"Who is the president?","back":"Trump"}{"front":"Who is my favorite president?","back":"Barack Obama"}
