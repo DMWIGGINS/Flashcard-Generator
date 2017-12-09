@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/DMWIGGINS/Flashcard-Generator#readme",
   "dependencies": {
-    "inquirer": "^4.0.1",
-    "jquery": "^3.2.1"
+    "inquirer": "^4.0.1"
   }
 }
