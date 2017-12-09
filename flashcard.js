@@ -15,7 +15,6 @@ ClozeCard.prototype.correctFormat = function () {
     if (this.fulltext.search(this.cloze) != -1) {
         console.log("Entered correctly");
         return true;
-
     } else {
         console.log("The text you have entered does not include the cloze and is broken");
         return false;
@@ -26,7 +25,7 @@ BasicCard.prototype.printInfoBasic = function () {
     console.log("Front: " + this.front);
     console.log("Back: " + this.back);
 };
-// adding method to ClozeCard that will log fulltext, partial, and cloze parts
+// adding method to ClozeCard that will log fulltext, partial, and cloze 
 ClozeCard.prototype.printInfoCloze = function () {
     console.log("Fulltext: " + this.fulltext);
     console.log("Cloze: " + this.cloze);
@@ -47,6 +46,7 @@ ClozeCard.prototype.printInfoCloze = function () {
 
 // set count to 0 to prepare for recursive loop 
 var count = 0;
+
 // function that will prompt the uset to create a basic flashcard by inputting the text for the front and the back,
 // create a new instance of BasicCard and add it to myBasicCards array,
 // add the text to basiclog.txt 
@@ -65,7 +65,6 @@ function createBasicCard() {
             myBasicCards.push(basicCard);
             fs.appendFile("basiclog.txt", JSON.stringify(basicCard));
             //  fs.appendFile("basiclog.txt", JSON.stringify(myBasicCards)); 
-
             basicCard.printInfoBasic();
             //  console.log(myBasicCards);
             count++;
@@ -83,10 +82,8 @@ function createBasicCard() {
             $("#answer").text(MyBasicCards[i].back);
             //  document.getElementById("question").innerHTML = MyBasicCards[1].front;
             //  document.getElementById("answer").innerHTML = MyBasicCards[1].back;
-
         }
     }
-
 };
 
 // function that will prompt the uset to create a cloze flashcard by inputting the text for the front and the back,
@@ -108,7 +105,6 @@ function createClozeCard() {
                 console.log("Please try again");
                 createClozeCard();
             } else {
-
                 myClozeCards.push(clozeCard);
                 fs.appendFile("clozelog.txt", JSON.stringify(clozeCard));
                 clozeCard.printInfoCloze();
@@ -124,10 +120,10 @@ function createClozeCard() {
         console.log("Your cloze cards have been created!");
         for (var i = 0; i < myClozeCards.length; i++) {
             myClozeCards[i].printInfoCloze();
-
         }
     };
 };
+
 // prompt user to choose to create basic flashcards, cloze flashcards, or to quit 
 function inputFlashCard() {
     inquirer.prompt([{
@@ -135,22 +131,15 @@ function inputFlashCard() {
         name: "flashcard",
         message: "What type of flashcard would you like to create?",
         choices: ["Basic", "Cloze", "I'm all done for now"]
-
     }]).then(function (answers) {
         if (answers.flashcard === "Basic") {
             createBasicCard();
-
-
         } else if (answers.flashcard === "Cloze") {
             createClozeCard();
-
-
         } else if (answers.flashcard === "I'm all done for now") {
             console.log("See you next time!");
 
-
         }
-
     });
 };
 
